@@ -7,14 +7,14 @@ from app.schemas.product import ProductResponse, ProductListResponse
 router = APIRouter(prefix="/api/products", tags=["products"])
 
 
-@router.get("", response_model=ProductListResponse, status_code=status.HTTP_200_OK)
+@router.get("/", response_model=ProductListResponse, status_code=status.HTTP_200_OK)
 def get_categories(db: Session = Depends(get_db)):
     service = ProductService(db)
     return service.get_all_products()
 
 
 @router.get(
-    "{/product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK
+    "/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK
 )
 def get_product(product_id: int, db: Session = Depends(get_db)):
     service = ProductService(db)
