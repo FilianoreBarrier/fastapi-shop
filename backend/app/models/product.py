@@ -1,6 +1,9 @@
-from sqlalchemy import Column, Integer, String, Float, Text, DateTime, ForeignKey
+from datetime import datetime, timezone
+
+from sqlalchemy import (Column, DateTime, Float, ForeignKey, Integer, String,
+                        Text)
 from sqlalchemy.orm import relationship
-from datetime import datetime
+
 from ..database import Base
 
 
@@ -12,7 +15,7 @@ class Product(Base):
     price = Column(Float, nullable=False)
     category_id = Column(Integer, ForeignKey('categories.id'),nullable=False)
     image_url = Column(String)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     category = relationship("Category",back_populates="products")
 
